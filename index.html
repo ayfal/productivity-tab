@@ -9,13 +9,15 @@
   <body>
     <p>This is a very simple and surprisingly effective productivity tool.</p>
 	<p>It just alerts you every <input id="t" type="number" value="10" size="1"> minutes to switch tasks.</p>
+	<p><input id="l" type="text" value="task1; task2; task3 etc." size="30"></p>
 	<p>The alarm lasts <input id="a" type="number" value="8" size="1"> seconds, and the counter restarts by itself.</p>
     <p id="timer" style="background-color:#4CAF50;"></p>
 	<button id="strt" onclick="start()" autofocus>Start</button>
-	<!-- <p id="topic" style="font-size:300%">סידורים</p> -->
+	<p id="topic" style="font-size:300%"></p>
 	<!--<input type="checkbox" id="snd" onclick="enblsnd()">-->
+	
     <script>
-	  var spd, st,tsk,alrm,br,rt;
+	  var spd, st,tsk,alrm,br,rt,tasks,task;
         
 	  function start(){		  
 		  switch (strt.innerHTML) {
@@ -29,6 +31,9 @@
 			  br=setInterval(timer, 10);
 			  es=new Audio("Vacation - AShamaluevMusic.mp3");
 			  if (("Notification" in window) && Notification.permission === "default") {Notification.requestPermission();}
+			  tasks=document.getElementById("l").value.split(";");
+			  task=0;
+			  topic.innerHTML=tasks[0];
 			  break;
 			  case "Pause":
 			  clearInterval(br);			  
@@ -61,8 +66,9 @@
 		es.autoplay = true;
 		es.load();		
 		setTimeout(stop,1000*alrm);		
-		// topic.innerHTML = (topic.innerHTML == "סידורים") ? "תורה" : "סידורים";
-		if (("Notification" in window) && Notification.permission === "granted") { var notification = new Notification("Switch task"/* topic.innerHTML */);}
+		task=(task+1)%tasks.length;
+		topic.innerHTML=tasks[task];
+		if (("Notification" in window) && Notification.permission === "granted") { var notification = new Notification(/*"Switch task"*/ topic.innerHTML );}
 	    
 		/*if (!("Notification" in window)) {
 		  alert("This browser does not support desktop notification");
@@ -86,7 +92,7 @@
 		s=Math.trunc((rt%60000)/1000);
 		s=(s < 10) ? "0" + s : s;
 		document.getElementById("timer").innerHTML=m+":"+s;
-		document.getElementById("title").innerHTML=m+":"+s//+" "+topic.innerHTML;
+		document.getElementById("title").innerHTML=m+":"+s+" "+topic.innerHTML;
 		if (rt<0) end();
       }
     </script>
