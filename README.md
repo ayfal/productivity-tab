@@ -9,4 +9,4 @@ There are 3 versions of this tool:
 
 2. A pyw file that you can run on your computer (you need to have python installed). It supports a small comma separated list of tasks. 
 
-3. A docm file that you can open in ms-word. This version has a task list (with all the capabilities of ms-word) and simple yet effective prioritizing system.
+3. A docm file that you can open in ms-word. This version has a task list (with all the capabilities of ms-word) and a simple yet effective prioritizing system.
